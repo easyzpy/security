@@ -1,17 +1,23 @@
 package com.zhangpingyang.springsecurity.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers(HttpMethod.POST, "/auth")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.GET, "/index")
                 .and()
                 .ignoring()
                 .antMatchers(HttpMethod.GET,
@@ -26,7 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/index")
         ;
 //        super.configure(web);
-
     }
 
     @Override
@@ -45,6 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //其他任意的请求需要权限
         .anyRequest().authenticated();
 
+        http.addFilterBefore()
+
+        http.headers()
+                .frameOptions().sameOrigin()//// X-frame-options  https://zhidao.baidu.com/question/502193450915313244.html
+                .cacheControl();
 //http.addFilterBefore()
 //        ;
     }
