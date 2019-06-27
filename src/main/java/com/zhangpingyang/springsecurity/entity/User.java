@@ -123,7 +123,16 @@ public class User {
         return lastModifyTm;
     }
 
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
     public void setLastModifyTm(Date lastModifyTm) {
+
         this.lastModifyTm = lastModifyTm;
     }
 }

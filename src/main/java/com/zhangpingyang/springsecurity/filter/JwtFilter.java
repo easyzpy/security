@@ -21,7 +21,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Component
 @WebFilter(urlPatterns = "/", filterName = "jwtFilter")
@@ -32,14 +31,20 @@ public class JwtFilter implements Filter {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtTokenUtil jwtUtil;
+    private static final String header = "Authorization";
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         System.out.println("doFilter" + request.getRequestURI());
-        HttpSession session = request.getSession(true);
-        String token = (String) session.getAttribute("token");
-        if (token == null) {
+        String token = request.getHeader(JwtFilter.header);
+        if (token != null) {
+            System.out.println(token);
+            long start = System.currentTimeMillis();
+            String usernameFromToken = jwtUtil.getSubjectFromToken(token);
+            long end = System.currentTimeMillis();
+            System.out.println("getSubject() cost time " + (end - start) + "ms");
+            System.out.println(usernameFromToken);
 
         }
         filterChain.doFilter(request, response);
