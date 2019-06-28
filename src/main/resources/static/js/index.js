@@ -23,6 +23,17 @@ $(function () {
         })
 
     })
+    $("#btn3").click(function(){
+        $.ajax({
+            url:"/detail",
+            type: "POST",
+            headers : createAuthorizationTokenHeader(),
+            success:function (data) {
+                console.log(data)
+            }
+        })
+
+    })
 })
 function createAuthorizationTokenHeader(){
     var token = getToken()

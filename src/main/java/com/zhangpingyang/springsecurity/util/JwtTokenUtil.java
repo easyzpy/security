@@ -1,7 +1,12 @@
 package com.zhangpingyang.springsecurity.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zhangpingyang.springsecurity.entity.User;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Clock;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClock;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -10,12 +15,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Clock;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.DefaultClock;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -75,9 +74,9 @@ public class JwtTokenUtil implements Serializable {
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
-    public String generateUserToken(UserDetails userDetails) {
+    public String generateUserToken(UserDetails userDetails) throws JsonProcessingException {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, FastJsonUtils.convertObjectToJSON(userDetails));
+        return doGenerateToken(claims, ObjectMapperUtil.getObjectMapper().writeValueAsString(userDetails));
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {

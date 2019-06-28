@@ -1,5 +1,6 @@
 package com.zhangpingyang.springsecurity.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zhangpingyang.springsecurity.service.JwtUserDetailService;
 import com.zhangpingyang.springsecurity.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AuthController {
 //    private PasswordEncoder encoder;
     @RequestMapping(value = "auth", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity auth(String username, String password){
+    public ResponseEntity auth(String username, String password) throws JsonProcessingException {
 
         if (username == null || password == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

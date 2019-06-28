@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
     @RequestMapping(value = "list")
-    @PreAuthorize(value = "hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> list(){
         return ResponseEntity.ok("123");
+    }
+    @RequestMapping("detail")
+    @PreAuthorize(value = "hasRole('USER')")
+    public ResponseEntity<Object> detail(){
+        return ResponseEntity.ok("123123");
     }
 }
