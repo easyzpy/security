@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class MySimpleGrantedAuthority implements GrantedAuthority {
 
-    private String authority;
     private String role;
 
     public MySimpleGrantedAuthority() {
@@ -26,22 +25,12 @@ public class MySimpleGrantedAuthority implements GrantedAuthority {
 
         return false;
     }
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
 
     @Override
     public String getAuthority() {
-        return null;
-    }
-
-    public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
     @Override
     public int hashCode() {
         return this.role.hashCode();

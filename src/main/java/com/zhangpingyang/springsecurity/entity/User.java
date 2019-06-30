@@ -1,5 +1,7 @@
 package com.zhangpingyang.springsecurity.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +27,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Column
+    @CreatedDate
+    private Date createTime;
+
     @Column(length = 50, unique = true)
     @NotNull
     @Size(min = 4, max = 50)
@@ -48,7 +54,6 @@ public class User {
     private String email;
     @Column
     @NotNull
-    @Size(min = 3, max = 50)
     private Boolean enable;
 
     @Column
@@ -65,6 +70,14 @@ public class User {
 
     public Long getUserId() {
         return userId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public void setUserId(Long userId) {

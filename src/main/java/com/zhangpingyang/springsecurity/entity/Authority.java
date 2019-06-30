@@ -31,6 +31,13 @@ public class Authority {
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
 
+    public Authority() {
+    }
+
+    public Authority(Integer authorityId) {
+        this.authorityId = authorityId;
+    }
+
     public Integer getAuthorityId() {
         return authorityId;
     }

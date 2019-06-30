@@ -37,10 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(HttpMethod.POST, "/auth")
                 .and()
-                .ignoring()
+            .ignoring()
                 .antMatchers(HttpMethod.GET, "/index")
                 .and()
-                .ignoring()
+            .ignoring()
                 .antMatchers(HttpMethod.GET,
                         "/",
                         "/*.html",
@@ -48,9 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js")
-                .and()
-        .ignoring()
-        .antMatchers(HttpMethod.GET, "/index")
         ;
 //        super.configure(web);
     }
@@ -66,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
                 //auth开头的路径随意访问
         .antMatchers("/auth/**").permitAll()
-        .antMatchers("/index").permitAll()
+        .antMatchers("/index", "/").permitAll()
 //        .antMatchers("/list").permitAll()
         //其他任意的请求需要权限
         .anyRequest().authenticated();
