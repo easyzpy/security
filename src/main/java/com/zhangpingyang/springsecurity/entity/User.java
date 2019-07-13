@@ -1,26 +1,19 @@
 package com.zhangpingyang.springsecurity.entity;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "jwt_user")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -31,34 +24,30 @@ public class User {
     @CreatedDate
     private Date createTime;
 
-    @Column(length = 50, unique = true)
-    @NotNull
+    @Column(length = 50, unique = true, nullable = false)
     @Size(min = 4, max = 50)
     private String username;
+    @Column(length = 11, unique = true)
+    private String phone;
 
-    @Column(length = 50)
-    @NotNull
-    @Size(min = 3, max = 50)
+    @Column(length = 50, nullable = false)
+    @Size(min = 3, max = 100)
     private String password;
-    @Column(length = 50)
-    @NotNull
+    @Column(length = 50, nullable = false)
     @Size(min = 3, max = 50)
     private String firstName;
-    @Column(length = 50)
-    @NotNull
+    @Column(length = 50, nullable = false)
     @Size(min = 3, max = 50)
     private String lastName;
-    @Column(length = 50)
-    @NotNull
+    @Column(length = 50, nullable = false, unique = true)
     @Size(min = 3, max = 50)
     private String email;
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private Boolean enable;
 
-    @Column
+    @Column(nullable = false)
+    @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     private Date lastModifyTm;
     @ManyToMany
     @JoinTable(
@@ -67,6 +56,14 @@ public class User {
             , inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "authorityId")}
     )
     private List<Authority> authorities;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Long getUserId() {
         return userId;

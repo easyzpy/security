@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!--设置扫描时间 10秒-->
+<configuration scan="true" scanPeriod="10 seconds">
+<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+<include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+<root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+</root>
+
+<logger name="com.zhangpingyang" level="INFO"/>
+</configuration>

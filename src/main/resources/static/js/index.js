@@ -54,12 +54,13 @@ function doLogin() {
         type: "POST",
         data: {username:username, password: password},
         success:function (data) {
-            // console.log(typeof data)
-            // console.log(data)
-            if (typeof data === "string") {
-                localStorage.setItem("token", data);
+            if (data && data.code === 0) {
+                alert("登陆成功")
+            } else if(data) {
+                alert(data.msg)
             }
         }
+
     })
 
 }

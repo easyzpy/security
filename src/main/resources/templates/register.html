@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+星号为必填项
+    <form method="post" action="/register" onsubmit="return false">
+        用户名：*<input name="username" value="" type="text"/><br>
+        密码:*<input name="password" type="password" value=""/><br>
+        确认密码:*<input name="rePassword" type="password" value=""><br>
+        FirstName:*<input name="firstName" type="text" value=""><br>
+        lastName:*<input name="lastName" type="text" value=""><br>
+        email:*<input name="email" type="text" value=""><br>
+        phone:*<input name="phone" type="text" value=""><br>
+        <button id="registerBtn">注册</button><a href="/index">登陆</a>
+    </form>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $("#registerBtn").click(function () {
+        var username = $("[name='username']").val()
+        var password = $("[name='password']").val()
+        var rePassword = $("[name='rePassword']").val()
+        var firstName = $("[name='firstName']").val()
+        var lastName = $("[name='lastName']").val()
+        var email = $("[name='email']").val()
+        var phone = $("[name='phone']").val()
+        if (!username || !password || !rePassword || username.length < 5 || password.length < 5 || rePassword.length < 5
+        ||!firstName || !lastName || !email) {
+            alert("必选项不能为空, 且必须大于5位")
+            return;
+        }
+        if (password !== rePassword) {
+            alert("两次输入必须相等")
+        }
+        var re = new RegExp(/^[A-Za-z0-9_\-\u4e00-\u9fa5]{4,16}$/)
+        if (!re.test(username)) {
+            alert("username")
+            return;
+        }
+        var re = new RegExp(/^[a-zA-Z0-9\-_]{4,16}$/)
+        if (!re.test(password)) {
+            alert("password")
+            return;
+        }
+        var emailRegex =/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+
+        re = new RegExp(emailRegex);
+        if (!re.test(email)) {
+            alert("请填写正确的邮箱")
+            return;
+        }
+        var phoneRegex = /0?(13|14|15|17|18|19)[0-9]{9}/;
+        re = new RegExp(phoneRegex)
+        if (!re.test(phone)) {
+            alert("请填写正确的电话号码")
+            return;
+        }
+
+        var user = {username:username
+            , password:password
+            , email:email
+            , phone:phone
+            , firstName:firstName
+            , lastName:lastName
+        };
+        $.ajax({
+            url:"/register",
+            type: "POST",
+            data:JSON.stringify(user),
+            contentType:'application/json',
+            success:function (data) {
+
+                if (data && data.code === 0) {
+                    alert("注册成功");
+                } else if (data){
+                    alert(data.msg)
+                }
+            }
+        })
+
+
+    })
+</script>
+</html>

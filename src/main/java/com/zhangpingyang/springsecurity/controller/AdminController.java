@@ -3,7 +3,10 @@ package com.zhangpingyang.springsecurity.controller;
 import com.zhangpingyang.springsecurity.entity.User;
 import com.zhangpingyang.springsecurity.service.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @Controller
 public class AdminController {
+    public static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
     @Autowired
     private UserService userService;
 
@@ -21,8 +25,8 @@ public class AdminController {
     @PreAuthorize("hasRole('USER')")
     public String list(ModelMap model){
         List<User> userList = userService.getUserList(1, 10);
-//        List<User> content = userList.getContent();
         model.addAttribute("list", userList);
+
         return "user_list";
     }
     @RequestMapping("detail")
@@ -37,7 +41,5 @@ public class AdminController {
         }
         model.addAttribute("user", userById);
         return "user_detail";
-
-
     }
 }
