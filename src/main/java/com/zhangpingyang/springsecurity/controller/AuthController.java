@@ -2,6 +2,7 @@ package com.zhangpingyang.springsecurity.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zhangpingyang.springsecurity.StatusException;
+import com.zhangpingyang.springsecurity.bean.JwtUser;
 import com.zhangpingyang.springsecurity.bean.res.ResponseBean;
 import com.zhangpingyang.springsecurity.constant.SecurityConstant;
 import com.zhangpingyang.springsecurity.entity.User;
@@ -24,6 +25,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -57,8 +60,15 @@ public class AuthController {
     private RedisTemplate redisTemplate;
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    @RequestMapping(value = "index")
-    public String index(){
+    @RequestMapping(value = {"index", "/"})
+    public String index(HttpServletRequest request){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            JwtUser user = (JwtUser) authentication.getPrincipal();
+            request.setAttribute("user", user);
+            request.setAttribute("authorities", user.getAuthorities());
+        }
+        System.out.println("index");
         return "index";
     }
 

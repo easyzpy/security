@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 
 public class JwtUser implements UserDetails {
-    private Long id;
+    private String id;
     private String username;
     private String firstname;
     private String lastname;
@@ -24,7 +24,7 @@ public class JwtUser implements UserDetails {
     public JwtUser() {
     }
 
-    public JwtUser(Long id, String username, String firstname, String lastname, String password, String email, Collection<MySimpleGrantedAuthority> authorities, boolean enabled, Date lastPasswordResetDate) {
+    public JwtUser(String id, String username, String firstname, String lastname, String password, String email, Collection<MySimpleGrantedAuthority> authorities, boolean enabled, Date lastPasswordResetDate) {
         this.id = id;
         this.username = username;
         this.firstname = firstname;
@@ -42,9 +42,6 @@ public class JwtUser implements UserDetails {
     }
 
     @JsonIgnore
-    public Long getId() {
-        return id;
-    }
 
     public String getFirstname() {
         return firstname;
@@ -62,7 +59,11 @@ public class JwtUser implements UserDetails {
         return lastPasswordResetDate;
     }
 
-    public void setId(Long id) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -8,6 +8,11 @@
 <body>
 <script>
 </script>
+<!--你好 尊敬的：-->
+<h1 th:if="${user}" th:text="'您好，尊敬的' + ${user.username}"></h1>
+
+<h1 th:if="${authorities}" th:each="authority : ${authorities}" th:text="${authority}"></h1>
+<h2></h2>
 <form action="/" method="post" onsubmit="return false">
     username:<input name="username" type="text" value=""/><br>
     password:<input name="password" type="password" value=""/><br>

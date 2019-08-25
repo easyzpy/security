@@ -16,7 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: Zhang Pingyang
@@ -26,8 +29,8 @@ import java.util.Date;
 @Table(name = "tb_topic")
 public class Topic {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+//    @GeneratedValue(generator = "system-uuid")
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 40)
     private String id;
     /**
@@ -65,6 +68,16 @@ public class Topic {
     @Temporal(TemporalType.TIMESTAMP)
     @Column
     private Date createTime;
+    @Transient
+    private List<Reply> replies;
+
+    public List<Reply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+    }
 
     public String getId() {
         return id;

@@ -247,10 +247,13 @@ public class MyHttpUtil {
      * 发送  http get 请求
      */
 	@SuppressWarnings("rawtypes")
-	public static String clientGet(String url,Map<String,String> params) {
+	public static String clientGet(String url,Map<String,String> params, Integer timeout) {
         HttpClient httpClient = new HttpClient();
         GetMethod method = new GetMethod(url);
         String rs = null;
+		if (timeout == null) {
+			timeout = HTTP_TIMEOUT;
+		}
         try {
 			Set<Map.Entry<String,String>> entrySet=params.entrySet();
 			for(Map.Entry entry:entrySet){
@@ -259,8 +262,8 @@ public class MyHttpUtil {
 				httpMethodParams.setParameter(entry.getKey().toString(),entry.getValue());
 				method.setParams(httpMethodParams);
 			}
-            method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, HTTP_TIMEOUT); //设置 post 方法请求超时为 30 秒
-            httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(HTTP_TIMEOUT); //设置 http 连接超时为 30 秒
+            method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, timeout); //设置 post 方法请求超时为 30 秒
+            httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(timeout); //设置 http 连接超时为 30 秒
             httpClient.executeMethod(method);
             //rs = method.getResponseBodyAsString();//不推荐用这个方法
             rs = getResponseFromHttpMethod(method,UTF8);
@@ -289,14 +292,17 @@ public class MyHttpUtil {
 	/**
 	 * 发送  http get 请求
 	 */
-	public static String clientGet(String url,String queryStr) {
+	public static String clientGet(String url,String queryStr, Integer timeout) {
 		HttpClient httpClient = new HttpClient();
 		GetMethod method = new GetMethod(url);
 		String rs = null;
+		if (timeout == null) {
+			timeout = HTTP_TIMEOUT;
+		}
 		try {
 			method.setQueryString(queryStr);
-			method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, HTTP_TIMEOUT); //设置 post 方法请求超时为 30 秒
-			httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(HTTP_TIMEOUT); //设置 http 连接超时为 30 秒
+			method.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, timeout); //设置 post 方法请求超时为 30 秒
+			httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(timeout); //设置 http 连接超时为 30 秒
 			httpClient.executeMethod(method);
 			//rs = method.getResponseBodyAsString();//不推荐用这个方法
 			rs = getResponseFromHttpMethod(method,UTF8);

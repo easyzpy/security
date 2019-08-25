@@ -120,7 +120,7 @@ public class UserService {
     public void deleteUser(long userId) {
 //        userDao.deleteById(userId);
         User user = new User();
-        user.setUserId(userId);
+//        user.setUserId(userId);
         userDao.delete(user);
     }
 }

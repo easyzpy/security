@@ -1,5 +1,6 @@
 package com.zhangpingyang.springsecurity.entity;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -7,8 +8,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -17,8 +27,11 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+        @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(length = 40)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String userId;
 
     @Column
     @CreatedDate
@@ -49,6 +62,10 @@ public class User {
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifyTm;
+    @Column(nullable = false, length = 50)
+    private String loginname;
+    @Column(length = 200)
+    private String avatarUrl;
     @ManyToMany
     @JoinTable(
             name = "user_authority"
@@ -56,6 +73,36 @@ public class User {
             , inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "authorityId")}
     )
     private List<Authority> authorities;
+//    @ManyToMany(mappedBy = "ups", fetch = FetchType.LAZY)
+//    private List<Reply> replies;
+
+//    public List<Reply> getReplies() {
+//        return replies;
+//    }
+//
+//    public void setReplies(List<Reply> replies) {
+//        this.replies = replies;
+//    }
+
+    public User() {
+    }
+
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getLoginname() {
+        return loginname;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
 
     public String getPhone() {
         return phone;
@@ -65,8 +112,12 @@ public class User {
         this.phone = phone;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Date getCreateTime() {
@@ -75,10 +126,6 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {

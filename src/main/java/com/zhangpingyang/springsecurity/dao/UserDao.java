@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserDao extends JpaRepository<User, Long> {
     User findByUsername(String username);
-
+    User findByLoginname(String loginname);
     @Query(value = "from User")
     List<User> getAllUser();
 
