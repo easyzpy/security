@@ -42,6 +42,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String origin = request.getHeader("Origin");
+        // 设置允许跨域访问的方法
+        response.setHeader("Access-Control-Allow-Origin", origin);
+        response.setHeader("Access-Control-Allow-Methods", "POST,GET");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.addHeader("Access-Control-Allow-Headers","Authorization,Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Allow-Credentials","true");
         String requestURI = request.getRequestURI();
         if (requestURI.equals("/error") || requestURI.equals("/favicon.ico")) {
             filterChain.doFilter(request,response);

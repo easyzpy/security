@@ -1,5 +1,6 @@
 package com.zhangpingyang.springsecurity.entity;
 
+import com.zhangpingyang.springsecurity.entity.react.Topic;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -73,16 +74,15 @@ public class User {
             , inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "authorityId")}
     )
     private List<Authority> authorities;
-//    @ManyToMany(mappedBy = "ups", fetch = FetchType.LAZY)
-//    private List<Reply> replies;
-
-//    public List<Reply> getReplies() {
-//        return replies;
-//    }
-//
-//    public void setReplies(List<Reply> replies) {
-//        this.replies = replies;
-//    }
+    /**
+     * 用户的收藏
+     */
+    @ManyToMany
+    @JoinTable(
+            name = "collect_topic",
+            joinColumns = {@JoinColumn(name = "", referencedColumnName = "")}
+    )
+    private List<Topic> collections;
 
     public User() {
     }

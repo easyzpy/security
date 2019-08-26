@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
                 //auth开头的路径随意访问
         .antMatchers("/auth/**").permitAll()
-        .antMatchers("/index", "/", "/register").permitAll()
+        .antMatchers("/index", "/", "/register", "/api/V1/topic/**", "/api/V1/topics").permitAll()
         //其他任意的请求需要权限
         .anyRequest().authenticated();
 
