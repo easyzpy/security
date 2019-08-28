@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @WebFilter(urlPatterns = "/", filterName = "jwtFilter")
@@ -71,6 +72,8 @@ public class JwtFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request,response);
                     return;
                 }
+                //更新token生效时间
+                redisTemplate.expire(value, SecurityConstant.expire_min, TimeUnit.MINUTES);
                 JwtUser jwtUser = ObjectMapperUtil.getObjectMapper().readValue(o, JwtUser.class);
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(jwtUser, null, jwtUser.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

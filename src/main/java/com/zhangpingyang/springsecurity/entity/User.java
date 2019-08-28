@@ -9,9 +9,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -77,16 +79,28 @@ public class User {
     /**
      * 用户的收藏
      */
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "collect_topic",
-            joinColumns = {@JoinColumn(name = "", referencedColumnName = "")}
+            name = "collect_topic"
+            ,joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")}
+            ,inverseJoinColumns = {@JoinColumn (name= "id", referencedColumnName = "id")}
     )
     private List<Topic> collections;
 
     public User() {
     }
 
+    public User(String userId) {
+        this.userId = userId;
+    }
+
+    public List<Topic> getCollections() {
+        return collections;
+    }
+
+    public void setCollections(List<Topic> collections) {
+        this.collections = collections;
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;

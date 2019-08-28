@@ -31,7 +31,7 @@ public class AdminController {
     }
     @RequestMapping("detail")
     @PreAuthorize(value = "hasRole('ADMIN')")
-    public String detail(@RequestParam(value = "id") Long id, ModelMap model){
+    public String detail(@RequestParam(value = "id") String id, ModelMap model){
         if (id == null) {
             return "/error";
         }

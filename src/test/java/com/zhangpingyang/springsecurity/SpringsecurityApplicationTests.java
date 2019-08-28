@@ -1,21 +1,16 @@
 package com.zhangpingyang.springsecurity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhangpingyang.springsecurity.dao.UserDao;
 import com.zhangpingyang.springsecurity.dao.topic.ReplyDao;
 import com.zhangpingyang.springsecurity.dao.topic.TopicContentDao;
 import com.zhangpingyang.springsecurity.dao.topic.TopicDao;
 import com.zhangpingyang.springsecurity.entity.Authority;
 import com.zhangpingyang.springsecurity.entity.User;
-import com.zhangpingyang.springsecurity.entity.react.Reply;
-import com.zhangpingyang.springsecurity.entity.react.Topic;
-import com.zhangpingyang.springsecurity.entity.react.TopicContent;
 import com.zhangpingyang.springsecurity.enumeration.AuthorityEnum;
-import com.zhangpingyang.springsecurity.enumeration.react.TopicType;
+import com.zhangpingyang.springsecurity.service.TopicService;
 import com.zhangpingyang.springsecurity.service.UserService;
 import com.zhangpingyang.springsecurity.util.MyHttpUtil;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +20,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringRunner.class)
@@ -47,7 +39,14 @@ public class SpringsecurityApplicationTests {
     private UserDao userDao;
     @Autowired
     private ReplyDao replyDao;
+    @Autowired
+    private TopicService topicService;
 
+    @Test
+    public void test11() {
+        boolean collect = topicService.collect("1", "5d5bed6ed53e9171e98a975b");
+        System.out.println();
+    }
     @Test
     public void test10() {
         String s = MyHttpUtil.clientGet("https://cnodejs.org/api/v1/topic/5d5cbb25421846662d983a25" , "mdrender=false", /*param,*/ 50000);

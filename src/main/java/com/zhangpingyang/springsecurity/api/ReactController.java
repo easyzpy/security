@@ -7,8 +7,11 @@ import com.zhangpingyang.springsecurity.enumeration.react.TopicType;
 import com.zhangpingyang.springsecurity.service.TopicService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +28,19 @@ import java.util.List;
 public class ReactController {
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @PostMapping(value = "collect")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseBean collect(
+//            @RequestParam(value = "accesstoken")String accesstoken,
+            @RequestParam(value = "topic_id") String topicId) {
+//        System.out.println(accesstoken);
+        System.out.println(topicId);
+
+        return null;
+    }
 
     @GetMapping(value = "topics")
     public ResponseBean topics(@RequestParam(value = "page", required = false) Integer page

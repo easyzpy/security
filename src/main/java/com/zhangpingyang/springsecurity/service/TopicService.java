@@ -1,7 +1,9 @@
 package com.zhangpingyang.springsecurity.service;
 
+import com.zhangpingyang.springsecurity.dao.UserDao;
 import com.zhangpingyang.springsecurity.dao.topic.ReplyDao;
 import com.zhangpingyang.springsecurity.dao.topic.TopicDao;
+import com.zhangpingyang.springsecurity.entity.User;
 import com.zhangpingyang.springsecurity.entity.react.Reply;
 import com.zhangpingyang.springsecurity.entity.react.Topic;
 
@@ -11,7 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUtil;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +26,8 @@ public class TopicService {
     private TopicDao topicDao;
     @Autowired
     private ReplyDao replyDao;
+    @Autowired
+    private UserDao userDao;
     public List<Topic> getTopicList(boolean hasTopicContent, Topic condition, Integer page, Integer limit) {
         Example<Topic> example = Example.of(condition);
         Sort orders = new Sort(Sort.Direction.DESC, "createTime");
@@ -47,5 +55,23 @@ public class TopicService {
         List<Reply> all = replyDao.findAll(example, sort);
         topic.setReplies(all);
         return topic;
+    }
+
+    @Transactional
+    public boolean collect(String userId, String topicId) {
+        User user = userDao.getOne(userId);
+        if (user == null) {
+            return false;
+        }
+        Topic topic = topicDao.getOne(topicId);
+        if (topic == null) {
+            return false;
+        }
+        user.getCollections();
+        ArrayList<Topic> topics = new ArrayList<>();
+        topics.add(topic);
+        user.setCollections(topics);
+
+        return true;
     }
 }

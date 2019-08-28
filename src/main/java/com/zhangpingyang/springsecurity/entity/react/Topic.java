@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -70,6 +71,23 @@ public class Topic {
     private Date createTime;
     @Transient
     private List<Reply> replies;
+    @ManyToMany(mappedBy = "collections", fetch = FetchType.LAZY)
+    private List<User> users;
+
+    public Topic(String id) {
+        this.id = id;
+    }
+
+    public Topic() {
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public List<Reply> getReplies() {
         return replies;

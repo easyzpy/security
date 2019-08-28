@@ -116,7 +116,7 @@ public class AuthController {
 //        String token = jwtTokenUtil.generateUserToken(userDetails);不在使用token登录 使用uuid 加redis解决
         String uuid = UUID.randomUUID().toString();
         ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(uuid, ObjectMapperUtil.getObjectMapper().writeValueAsString(userDetails), 10, TimeUnit.MINUTES);
+        valueOperations.set(uuid, ObjectMapperUtil.getObjectMapper().writeValueAsString(userDetails), SecurityConstant.expire_min, TimeUnit.MINUTES);
         Cookie cookie = new Cookie(SecurityConstant.token_name, uuid);
         cookie.setPath("/");
         cookie.setMaxAge(-1);

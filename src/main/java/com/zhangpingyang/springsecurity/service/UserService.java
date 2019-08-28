@@ -89,7 +89,7 @@ public class UserService {
         return true;
     }
 
-    public User getUserById(long id) {
+    public User getUserById(String id) {
         return userDao.findById(id).get();
     }
 
