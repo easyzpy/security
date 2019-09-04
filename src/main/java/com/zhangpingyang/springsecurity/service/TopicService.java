@@ -67,10 +67,17 @@ public class TopicService {
         if (topic == null) {
             return false;
         }
-        user.getCollections();
-        ArrayList<Topic> topics = new ArrayList<>();
-        topics.add(topic);
-        user.setCollections(topics);
+        List<Topic> collections = user.getCollections();
+        if (collections == null) {
+            collections = new ArrayList<>();
+        }
+        for (Topic collection : collections) {
+            if (collection.getId().equals(topicId)) {
+                return true;
+            }
+        }
+        collections.add(topic);
+        user.setCollections(collections);
 
         return true;
     }

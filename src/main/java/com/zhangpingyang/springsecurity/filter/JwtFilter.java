@@ -32,14 +32,10 @@ import java.util.concurrent.TimeUnit;
 @WebFilter(urlPatterns = "/", filterName = "jwtFilter")
 public class JwtFilter extends OncePerRequestFilter {
     private final Logger logger =LoggerFactory.getLogger(JwtFilter.class);
-//    @Resource(name = "jwtUserDetailService")
-//    @Qualifier
-//    private UserDetailsService userDetailsService;
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
     private JwtTokenUtil jwtUtil;
-//    private static final String header = "Authorization";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

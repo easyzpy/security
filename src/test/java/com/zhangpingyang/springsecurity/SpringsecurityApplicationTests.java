@@ -44,7 +44,7 @@ public class SpringsecurityApplicationTests {
 
     @Test
     public void test11() {
-        boolean collect = topicService.collect("1", "5d5bed6ed53e9171e98a975b");
+        boolean collect = topicService.collect("1", "5cbfd9aca86ae80ce64b3175");
         System.out.println();
     }
     @Test
