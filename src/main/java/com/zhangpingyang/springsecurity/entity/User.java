@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "jwt_user")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class User implements Serializable {
 
     @Id
         @GeneratedValue(generator = "system-uuid")

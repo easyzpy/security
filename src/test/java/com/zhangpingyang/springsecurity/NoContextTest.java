@@ -1,6 +1,7 @@
 package com.zhangpingyang.springsecurity;
 
 import org.junit.Test;
+import org.springframework.util.Assert;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -10,9 +11,15 @@ import java.io.InputStreamReader;
 
 /**
  * @Author: Zhang Pingyang
- * @Date: 2019/8/23 17:43
+ * @Date: 2019/8/23 17:43IllegalArgumentException
  */
 public class NoContextTest {
+    @Test
+    public void test34() {
+        Integer a = null;
+
+        Assert.notNull(a, "ConnectionFactory must not be null!");
+    }
     @Test
     public void test2() {
 //        char a = '';

@@ -11,6 +11,8 @@ import com.zhangpingyang.springsecurity.util.ZCommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@CacheConfig
 public class UserService {
     @Autowired
     private UserDao userDao;
@@ -92,7 +95,7 @@ public class UserService {
     public User getUserById(String id) {
         return userDao.findById(id).get();
     }
-
+    @Cacheable(cacheNames = "getUserList")
     public List<User> getUserList(int page, Integer size) {
 //        return userDao.findAll(PageRequest.of(page, size != null?size:SecurityConstant.PAGE_SIZE, new Sort(Sort.Direction.DESC, SecurityConstant.SORT_STR)));
         return userDao.getAllUser();

@@ -48,17 +48,20 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class AuthController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUserDetailService jwtUserService;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private RedisTemplate redisTemplate;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUserDetailService jwtUserService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserService userService;
+    private final RedisTemplate redisTemplate;
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
+
+    public AuthController(AuthenticationManager authenticationManager, JwtUserDetailService jwtUserService, JwtTokenUtil jwtTokenUtil, UserService userService, RedisTemplate redisTemplate) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUserService = jwtUserService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userService = userService;
+        this.redisTemplate = redisTemplate;
+    }
 
     @RequestMapping(value = {"index", "/"})
     public String index(HttpServletRequest request){

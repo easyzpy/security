@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableCaching
+@EnableCaching//启用缓存
 public class SpringsecurityApplication {
 
     public static void main(String[] args) {
