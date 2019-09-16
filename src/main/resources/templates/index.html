@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>在云端</title>
+    <title th:inline="text">[(${myTitle})]</title>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
@@ -19,8 +19,9 @@
     <button id="login">login</button><button onclick="window.location.href='/register'">register</button>
 </form>
 <button id="btn">查看localstorage</button>
-<button onclick="window.location.href = '/list'">list</button>
-<button onclick="window.location.href = '/detail'">detail</button>
+<button onclick="window.location.href = '/list'">user_list</button><br>
+<button onclick="window.location.href = '/detail'">user_detail</button><br>
+<button onclick="window.location.href = '/topic/list'">topics</button><br>
 </body>
 <script src="/js/index.js"></script>
 </html>

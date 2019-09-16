@@ -49,7 +49,7 @@ public class ReactController {
             ) {
         Topic condition = new Topic();
         condition.setTab(tab);
-        List<Topic> list  =topicService.getTopicList(true, condition, page, limit);
+        List<Topic> list  =topicService.getTopicList(true, condition, page, limit).getContent();
         ResponseBean bean = new ResponseBean(0, "ok");
 //        bean.setData(list);
         ArrayList<TopicVo> rel = new ArrayList<>();

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 @CacheConfig
 public class JwtUserDetailService implements UserDetailsService {
     @Autowired
-//    @Qualifier(value = "userDaoJpa")
     @Qualifier(value = "userDaoJdbc")
     private UserDaoJdbc userDao;
 

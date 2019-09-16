@@ -1,7 +1,8 @@
 package com.zhangpingyang.springsecurity;
 
+import org.hibernate.Session;
 import org.junit.Test;
-import org.springframework.util.Assert;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -15,10 +16,10 @@ import java.io.InputStreamReader;
  */
 public class NoContextTest {
     @Test
-    public void test34() {
-        Integer a = null;
-
-        Assert.notNull(a, "ConnectionFactory must not be null!");
+    public void test3() {
+//        Session.class.getMethod()
+        String encode = new BCryptPasswordEncoder().encode("123");
+        System.out.println(encode);
     }
     @Test
     public void test2() {

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:inline="text">[(${myTitle})]</title>
+</head>
+<body>
+<h1>user list</h1>
+<table>
+    <thead>
+    <tr>
+        <td>title</td>
+        <td>author</td>
+        <td>visitCount</td>
+<!--        <td>createTime</td>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="topic : ${bean.data}" >
+        <td ><a th:text = "${topic.title}" th:href="@{'/detail?id=' + ${topic.id}}"></a></td>
+        <td th:text = "${topic.user.loginname}"></td>
+        <td th:text = "${topic.visitCount}"/>
+<!--        <td th:text = "${topic.lastName}"/>-->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

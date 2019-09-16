@@ -28,17 +28,16 @@ public class TopicService {
     private ReplyDao replyDao;
     @Autowired
     private UserDao userDao;
-    public List<Topic> getTopicList(boolean hasTopicContent, Topic condition, Integer page, Integer limit) {
+    public Page<Topic> getTopicList(boolean hasTopicContent, Topic condition, Integer page, Integer limit) {
         Example<Topic> example = Example.of(condition);
         Sort orders = new Sort(Sort.Direction.DESC, "createTime");
         if (page == null) {
             page = 0;
         }
         if (limit == null) {
-            limit = 40;
+            limit = 10;
         }
-        Page<Topic> all = topicDao.findAll(example, PageRequest.of(page, limit, orders));
-        return all.getContent();
+        return topicDao.findAll(example, PageRequest.of(page, limit, orders));
 
     }
 

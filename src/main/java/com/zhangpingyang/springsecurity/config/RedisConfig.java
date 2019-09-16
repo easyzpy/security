@@ -27,10 +27,10 @@ public class RedisConfig extends CachingConfigurerSupport {
             @Override
             public Object generate(Object target, Method method, Object... params) {
                 StringBuilder sb = new StringBuilder();
-                sb.append(target.getClass().getName());
-                sb.append(method.getName());
+                sb.append(target.getClass().getName()).append(".");
+                sb.append(method.getName()).append(",");
                 for (Object obj : params) {
-                    sb.append(obj.toString());
+                    sb.append(obj.toString()).append(",");
                 }
                 return sb.toString();
             }

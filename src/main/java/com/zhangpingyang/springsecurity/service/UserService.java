@@ -5,7 +5,6 @@ import com.zhangpingyang.springsecurity.dao.AuthorityDao;
 import com.zhangpingyang.springsecurity.dao.UserDao;
 import com.zhangpingyang.springsecurity.entity.Authority;
 import com.zhangpingyang.springsecurity.entity.User;
-
 import com.zhangpingyang.springsecurity.enumeration.AuthorityEnum;
 import com.zhangpingyang.springsecurity.util.ZCommonUtil;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

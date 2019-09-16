@@ -6,15 +6,13 @@ import com.zhangpingyang.springsecurity.bean.JwtUser;
 import com.zhangpingyang.springsecurity.bean.res.ResponseBean;
 import com.zhangpingyang.springsecurity.constant.SecurityConstant;
 import com.zhangpingyang.springsecurity.entity.User;
+import com.zhangpingyang.springsecurity.enumeration.AuthorityEnum;
 import com.zhangpingyang.springsecurity.service.JwtUserDetailService;
 import com.zhangpingyang.springsecurity.service.UserService;
 import com.zhangpingyang.springsecurity.util.JwtTokenUtil;
 import com.zhangpingyang.springsecurity.util.ObjectMapperUtil;
-
-import com.zhangpingyang.springsecurity.util.ZCommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
@@ -27,24 +25,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class AuthController {
@@ -66,7 +58,7 @@ public class AuthController {
     @RequestMapping(value = {"index", "/"})
     public String index(HttpServletRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
+        if (authentication != null && !(authentication.getAuthorities().size()==1 && authentication.getAuthorities().iterator().next().getAuthority().equals(AuthorityEnum.ROLE_TOURIST.name()))) {
             JwtUser user = (JwtUser) authentication.getPrincipal();
             request.setAttribute("user", user);
             request.setAttribute("authorities", user.getAuthorities());
@@ -111,6 +103,7 @@ public class AuthController {
         try {
             authenticate(username, password);
             userDetails = jwtUserService.loadUserByUsername(username);
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(new ResponseBean(-1, e.getMessage()));
