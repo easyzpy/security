@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing()
 @EnableCaching//启用缓存
 @EnableMongoRepositories
+
 public class SpringsecurityApplication {
 
     public static void main(String[] args) {

@@ -83,7 +83,7 @@
     </appender>
 
     <!--分别设置对应的日志输出节点 -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="console" />
         <appender-ref ref="debug" />
         <appender-ref ref="info" />

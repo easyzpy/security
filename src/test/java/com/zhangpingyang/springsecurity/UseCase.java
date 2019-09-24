@@ -2,7 +2,7 @@ package com.zhangpingyang.springsecurity;
 
 import org.junit.Test;
 
-public class TTest {
+public class UseCase {
     @Test
     public void test1(){
         String s = null;
